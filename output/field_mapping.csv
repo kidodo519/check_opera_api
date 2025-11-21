@@ -10,7 +10,7 @@
 予約,予約金額,stayInfoType.totalAmount.amount / currencyCode,GET /rsv/v1/reservations,総額(税がTotalに含まれる場合あり)。
 予約,販路,stayInfoType.bookingChannelCode,GET /rsv/v1/reservations,予約経路コード。
 予約,泊目,未掲載,-,泊数内の特定泊順を示すフィールドは仕様に見当たらず。
-予約,プラン名,stayInfoType.ratePlanCode,GET /rsv/v1/reservations,レート/プランコード。
+予約,プラン名,stayInfoType.ratePlanCode + reservationPackageType.packageHeaderType.primaryDetails.description,GET /rsv/v1/reservations および GET /hotels/{hotelId}/reservations/packageCategoryReservations,プランコードと、付帯パッケージの企画名称(Description)が取得可。必要に応じパッケージ検索APIで名称を補完。
 予約,夕食名,未掲載,-,食事名称のフィールドは仕様に見当たらず(パッケージ明細なし)。
 予約,朝食名,未掲載,-,食事名称のフィールドは仕様に見当たらず(パッケージ明細なし)。
 予約,エリア名,marketCode / sourceCodeDescription,GET /rsv/v1/reservations,マーケット/ソースコードは取得可。地理的エリア名は未掲載。
@@ -24,13 +24,13 @@
 予約,メールアドレス,reservationGuest.email / reservationCommunication.emails.emailInfo.email.emailAddress,GET /rsv/v1/reservations,メールアドレス。
 予約,メール送付可否,未掲載,-,メール配信可否のフラグは仕様に見当たらず。
 予約,顧客ID,reservationGuest.id,GET /rsv/v1/reservations,紐付くプロフィールID。
-会計,予約番号,reservationIdList[].id,GET /rsv/v1/reservations,予約レスポンス内のIDを利用。
-会計,利用日,未掲載 (日別明細なし),-,トランザクション日付を返す明細APIは仕様に見当たらず。
-会計,部門名,未掲載 (部門別取引なし),-,部門コード/名称を持つ会計明細API未確認。
-会計,付帯名,未掲載,-,付帯サービス名を返す会計明細API未確認。
-会計,金額,resRevenueBalanceType.totalRevenue / roomRevenue / foodAndBevRevenue など,GET /rsv/v1/reservations,予約単位の売上サマリのみ。明細単価・税別金額なし。
-会計,消費税,未掲載,-,税額を個別に返すフィールドは仕様に見当たらず。
-会計,数量,未掲載,-,数量を示す会計明細フィールドなし。
+会計,予約番号,request path reservationId / reservationFolioInfoType.reservationInfo.reservationIdList[].id,GET /hotels/{hotelId}/reservations/{reservationId}/folios,フォリオ取得時のパスおよびレスポンス内の予約ID。
+会計,利用日,summaryPostingType.transactionDate (または revenueDate),GET /hotels/{hotelId}/reservations/{reservationId}/folios,取引日付(収益日も併記可)。
+会計,部門名,trxCodesInfo.transactionCodes[].description,GET /hotels/{hotelId}/reservations/{reservationId}/folios?fetchInstructions=Transactioncodes,取引コードの説明を部門/科目として利用。
+会計,付帯名,summaryPostingType.transactionDescription,GET /hotels/{hotelId}/reservations/{reservationId}/folios,取引(付帯サービス)名称。
+会計,金額,summaryPostingType.postedAmount.amount / debitAmount / creditAmount,GET /hotels/{hotelId}/reservations/{reservationId}/folios,税/サービス込みの実際の計上額。借方・貸方で参照可。
+会計,消費税,未掲載,-,フォリオ明細に税額単独のフィールドは見当たらず(税込み金額のみ)。
+会計,数量,summaryPostingType.quantity,GET /hotels/{hotelId}/reservations/{reservationId}/folios,数量。
 部屋,予約番号,reservationIdList[].id,GET /rsv/v1/reservations,予約レスポンス内のIDを利用。
 部屋,宿泊日,stayInfoType.arrivalDate / departureDate,GET /rsv/v1/reservations,宿泊期間。
 部屋,部屋番号,stayInfoType.roomId,GET /rsv/v1/reservations,割当済みの部屋番号。
