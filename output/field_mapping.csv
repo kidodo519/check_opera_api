@@ -1,0 +1,36 @@
+カテゴリ,項目,APIフィールド,推奨エンドポイント,補足/備考
+予約,予約番号,reservationInfoType.reservationIdList[].id,GET /rsv/v1/reservations,内部/外部ID。typeでID種別指定。
+予約,施設コード,reservationInfoType.hotelId,GET /rsv/v1/reservations,物理プロパティコード。
+予約,宿泊日,stayInfoType.arrivalDate / departureDate,GET /rsv/v1/reservations,宿泊開始/終了日。
+予約,予約日,reservationInfoType.createDateTime,GET /rsv/v1/reservations,作成日時。
+予約,キャンセル区分,reservationInfoType.reservationStatus,GET /rsv/v1/reservations,予約状態(キャンセル含む)。
+予約,キャンセル日,reservationInfoType.cancellationInfo.date,GET /rsv/v1/reservations,キャンセル日付。
+予約,大人人数,stayInfoType.adultCount,GET /rsv/v1/reservations,大人人数。
+予約,子供人数,stayInfoType.childCount,GET /rsv/v1/reservations,子供人数。
+予約,予約金額,stayInfoType.totalAmount.amount / currencyCode,GET /rsv/v1/reservations,総額(税がTotalに含まれる場合あり)。
+予約,販路,stayInfoType.bookingChannelCode,GET /rsv/v1/reservations,予約経路コード。
+予約,泊目,未掲載,-,泊数内の特定泊順を示すフィールドは仕様に見当たらず。
+予約,プラン名,stayInfoType.ratePlanCode,GET /rsv/v1/reservations,レート/プランコード。
+予約,夕食名,未掲載,-,食事名称のフィールドは仕様に見当たらず(パッケージ明細なし)。
+予約,朝食名,未掲載,-,食事名称のフィールドは仕様に見当たらず(パッケージ明細なし)。
+予約,エリア名,marketCode / sourceCodeDescription,GET /rsv/v1/reservations,マーケット/ソースコードは取得可。地理的エリア名は未掲載。
+予約,リピート区分,未掲載,-,リピーター判定用の明示的フラグなし。
+予約,担当,reservationInfoType.creatorId,GET /rsv/v1/reservations,作成者ID。担当者に流用可能。
+予約,部屋数,stayInfoType.numberOfRooms,GET /rsv/v1/reservations,予約した部屋数。
+予約,エージェント予約番号,reservationInfoType.externalReferences[].id (idContextで種別識別),GET /rsv/v1/reservations,外部参照IDとして保持。
+予約,名前,reservationGuest.fullName,GET /rsv/v1/reservations,代表ゲスト名。
+予約,住所,reservationGuest.address,GET /rsv/v1/reservations,住所詳細(addressSearchType)。
+予約,電話番号,reservationGuest.phoneNumber / reservationCommunication.telephones,GET /rsv/v1/reservations,電話番号。
+予約,メールアドレス,reservationGuest.email / reservationCommunication.emails.emailInfo.email.emailAddress,GET /rsv/v1/reservations,メールアドレス。
+予約,メール送付可否,未掲載,-,メール配信可否のフラグは仕様に見当たらず。
+予約,顧客ID,reservationGuest.id,GET /rsv/v1/reservations,紐付くプロフィールID。
+会計,予約番号,reservationIdList[].id,GET /rsv/v1/reservations,予約レスポンス内のIDを利用。
+会計,利用日,未掲載 (日別明細なし),-,トランザクション日付を返す明細APIは仕様に見当たらず。
+会計,部門名,未掲載 (部門別取引なし),-,部門コード/名称を持つ会計明細API未確認。
+会計,付帯名,未掲載,-,付帯サービス名を返す会計明細API未確認。
+会計,金額,resRevenueBalanceType.totalRevenue / roomRevenue / foodAndBevRevenue など,GET /rsv/v1/reservations,予約単位の売上サマリのみ。明細単価・税別金額なし。
+会計,消費税,未掲載,-,税額を個別に返すフィールドは仕様に見当たらず。
+会計,数量,未掲載,-,数量を示す会計明細フィールドなし。
+部屋,予約番号,reservationIdList[].id,GET /rsv/v1/reservations,予約レスポンス内のIDを利用。
+部屋,宿泊日,stayInfoType.arrivalDate / departureDate,GET /rsv/v1/reservations,宿泊期間。
+部屋,部屋番号,stayInfoType.roomId,GET /rsv/v1/reservations,割当済みの部屋番号。
